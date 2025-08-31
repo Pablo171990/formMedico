@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ficha Médica – Semana 3</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #111827;
+            --muted: #94a3b8;
+            --ok: #16a34a;
+            --bad: #dc2626;
+            --accent: #3b82f6
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            background: linear-gradient(180deg, #0b1220, #0f172a);
+            color: #e5e7eb
+        }
+
+        header {
+            padding: 24px;
+            text-align: center
+        }
+
+        header h1 {
+            margin: 0 0 8px 0;
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem)
+        }
+
+        header p {
+            margin: 0;
+            color: var(--muted)
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px;
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 20px
+        }
+
+        @media (max-width: 980px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .25)
+        }
+
+        .card h2 {
+            margin: 0 0 12px 0;
+            font-size: 1.1rem;
+            color: #f8fafc
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px
+        }
+
+        .grid-1 {
+            grid-template-columns: 1fr
+        }
+
+        label {
+            display: block;
+            font-size: .9rem;
+            margin-bottom: 6px;
+            color: #cbd5e1
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background: #0b1220;
+            color: #e5e7eb;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 10px 12px
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, .25)
+        }
+
+        small.helper {
+            color: var(--muted)
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .row>button {
+            flex: 1 1 120px
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-weight: 600
+        }
+
+        .primary {
+            background: var(--accent);
+            color: white
+        }
+
+        .ghost {
+            background: #0b1220;
+            color: #cbd5e1;
+            border: 1px solid #334155
+        }
+
+        .danger {
+            background: #ef4444;
+            color: white
+        }
+
+        .status {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            color: #d1d5db
+        }
+
+        .status.ok {
+            border-color: #14532d;
+            background: rgba(22, 163, 74, .12);
+            color: #dcfce7
+        }
+
+        .status.err {
+            border-color: #7f1d1d;
+            background: rgba(220, 38, 38, .12);
+            color: #fee2e2
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid #334155;
+            text-align: left;
+            padding: 8px
+        }
+
+        th {
+            color: #cbd5e1;
+            font-weight: 700
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .hidden {
+            display: none
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Ficha Médica – Ingreso de Pacientes</h1>
+        <p class="muted">Semana 3 • Formulario validado + búsqueda por Apellido • Demostración educativa</p>
+    </header>
+
+    <main class="container">
+        <!-- FORM CARD -->
+        <section class="card" aria-labelledby="formTitle">
+            <h2 id="formTitle">Formulario</h2>
+            <form id="formFicha" novalidate>
+                <div class="grid">
+                    <div>
+                        <label for="rut">RUT (Chile)</label>
+                        <input id="rut" name="rut" placeholder="12.345.678-5" autocomplete="off" required />
+                        <small class="helper">Validación con dígito verificador</small>
+                    </div>
+                    <div>
+                        <label for="telefono">Teléfono</label>
+                        <input id="telefono" name="telefono" type="tel" placeholder="+56912345678" required />
+                    </div>
+
+                    <div>
+                        <label for="nombres">Nombres</label>
+                        <input id="nombres" name="nombres" placeholder="Ana Sofía" required />
+                    </div>
+                    <div>
+                        <label for="apellidos">Apellidos</label>
+                        <input id="apellidos" name="apellidos" placeholder="Pérez Muñoz" required />
+                    </div>
+
+                    <div>
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" placeholder="ana@dominio.cl" required />
+                    </div>
+                    <div>
+                        <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                        <input id="fechaNacimiento" name="fechaNacimiento" type="date" required />
+                    </div>
+
+                    <div>
+                        <label for="direccion">Dirección</label>
+                        <input id="direccion" name="direccion" placeholder="Av. Siempre Viva 742" required />
+                    </div>
+                    <div>
+                        <label for="ciudad">Ciudad</label>
+                        <select id="ciudad" name="ciudad" required>
+                            <option value="">Seleccione…</option>
+                            <option>Santiago</option>
+                            <option>Valparaíso</option>
+                            <option>Concepción</option>
+                            <option>Antofagasta</option>
+                            <option>La Serena</option>
+                            <option>Temuco</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="estadoCivil">Estado civil</label>
+                        <select id="estadoCivil" name="estadoCivil" required>
+                            <option value="">Seleccione…</option>
+                            <option>Soltero/a</option>
+                            <option>Casado/a</option>
+                            <option>Conviviente</option>
+                            <option>Divorciado/a</option>
+                            <option>Viudo/a</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="comentarios">Comentarios</label>
+                        <textarea id="comentarios" name="comentarios" rows="2" maxlength="300"
+                            placeholder="Observaciones…"></textarea>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:12px">
+                    <button type="submit" class="primary">Guardar</button>
+                    <button type="button" id="btnLimpiar" class="ghost">Limpiar</button>
+                    <button type="button" id="btnCerrar" class="danger">Cerrar</button>
+                </div>
+                <div id="status" class="status hidden" role="status" aria-live="polite"></div>
+            </form>
+        </section>
+
+        <!-- SEARCH CARD -->
+        <aside class="card" aria-labelledby="searchTitle">
+            <h2 id="searchTitle">Buscar por Apellido</h2>
+            <input id="buscarApellido" placeholder="Ej: Pérez" />
+            <small class="helper">Se filtra por coincidencia en apellidos</small>
+            <div id="resultados"></div>
+
+            <hr style="margin:16px 0; border-color:#334155" />
+            <div class="row">
+                <button id="btnExport" class="ghost" type="button">Exportar JSON</button>
+                <button id="btnDemo" class="ghost" type="button">Cargar datos demo</button>
+            </div>
+            <p class="muted" style="margin-top:6px">Los datos se guardan localmente (navegador) con fines demo.</p>
+        </aside>
+    </main>
+
+    <script>
+        // -------------------- Utilidades --------------------
+        const $ = (sel) => document.querySelector(sel);
+        const LS_KEY = 'fichasMedicas';
+        const todayISO = new Date().toISOString().split('T')[0];
+        $('#fechaNacimiento').setAttribute('max', todayISO);
+
+        function normalizaRut(rut) {
+            return rut.replace(/\.|-/g, '').trim().toUpperCase();
+        }
+        function formateaRut(rut) {
+            rut = normalizaRut(rut);
+            if (rut.length < 2) return rut;
+            const cuerpo = rut.slice(0, -1); const dv = rut.slice(-1);
+            let f = ''; let c = cuerpo.split('').reverse();
+            for (let i = 0; i < c.length; i++) { if (i && i % 3 === 0) f = '.' + f; f = c[i] + f; }
+            return `${f}-${dv}`;
+        }
+        // Valida RUT chileno con DV (módulo 11)
+        function validaRut(rut) {
+            rut = normalizaRut(rut);
+            if (!/^\d{7,8}[0-9K]$/.test(rut)) return false;
+            const cuerpo = rut.slice(0, -1); const dv = rut.slice(-1);
+            let suma = 0, m = 2;
+            for (let i = cuerpo.length - 1; i >= 0; i--) { suma += parseInt(cuerpo[i]) * m; m = m === 7 ? 2 : m + 1; }
+            const calc = 11 - (suma % 11);
+            const dvCalc = (calc === 11) ? '0' : (calc === 10 ? 'K' : String(calc));
+            return dvCalc === dv;
+        }
+
+        function getDB() { return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); }
+        function setDB(db) { localStorage.setItem(LS_KEY, JSON.stringify(db)); renderResultados(); }
+
+        function showStatus(msg, ok = true) {
+            const box = $('#status');
+            box.textContent = msg;
+            box.classList.remove('hidden', 'ok', 'err');
+            box.classList.add(ok ? 'ok' : 'err', 'status');
+            setTimeout(() => { box.classList.add('hidden'); }, 3500);
+        }
+
+        // -------------------- Guardar --------------------
+        $('#formFicha').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.currentTarget));
+            // Validaciones
+            data.rut = formateaRut(data.rut);
+            if (!validaRut(data.rut)) return showStatus('RUT inválido. Revísalo (con DV).', false);
+            if (!/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{2,}$/.test(data.nombres)) return showStatus('Nombres: solo letras y espacios (mín. 2).', false);
+            if (!/^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{2,}$/.test(data.apellidos)) return showStatus('Apellidos: solo letras y espacios (mín. 2).', false);
+            if (!/^[\w.+-]+@[\w-]+\.[\w.-]+$/.test(data.email)) return showStatus('Email inválido.', false);
+            if (!/^\+?56 ?9\d{8}$/.test(data.telefono)) return showStatus('Teléfono chileno inválido. Formato +569XXXXXXXX', false);
+            if (!data.ciudad) return showStatus('Seleccione una ciudad.', false);
+            if (!data.estadoCivil) return showStatus('Seleccione estado civil.', false);
+            if (new Date(data.fechaNacimiento) > new Date()) return showStatus('Fecha de nacimiento no puede ser futura.', false);
+
+            const db = getDB();
+            const key = normalizaRut(data.rut);
+            if (db[key]) {
+                if (!confirm('El RUT ya existe. ¿Deseas sobrescribir el registro?')) return;
+            }
+            db[key] = data;
+            setDB(db);
+            e.currentTarget.reset();
+            showStatus('Registro guardado correctamente.');
+        });
+
+        // -------------------- Limpiar --------------------
+        $('#btnLimpiar').addEventListener('click', () => {
+            $('#formFicha').reset();
+            showStatus('Formulario en blanco.');
+        });
+
+        // -------------------- Cerrar (deshabilita la edición) --------------------
+        $('#btnCerrar').addEventListener('click', () => {
+            const form = $('#formFicha');
+            [...form.elements].forEach(el => { el.disabled = true; });
+            showStatus('Formulario cerrado (solo lectura). Vuelva a cargar la página para reactivar.');
+        });
+
+        // -------------------- Buscar por Apellido --------------------
+        $('#buscarApellido').addEventListener('input', renderResultados);
+
+        function renderResultados() {
+            const term = ($('#buscarApellido').value || '').toLowerCase();
+            const db = getDB();
+            const arr = Object.values(db).filter(r => (r.apellidos || '').toLowerCase().includes(term));
+            const wrap = $('#resultados');
+            if (arr.length === 0) { wrap.innerHTML = '<p class="muted">Sin resultados.</p>'; return; }
+            let html = '<table><thead><tr><th>RUT</th><th>Nombre</th><th>Ciudad</th><th>Teléfono</th></tr></thead><tbody>';
+            for (const r of arr) {
+                html += `<tr><td>${r.rut}</td><td>${r.nombres} ${r.apellidos}</td><td>${r.ciudad || ''}</td><td>${r.telefono || ''}</td></tr>`;
+            }
+            html += '</tbody></table>';
+            wrap.innerHTML = html;
+        }
+
+        // -------------------- Exportar / Demo --------------------
+        $('#btnExport').addEventListener('click', () => {
+            const blob = new Blob([JSON.stringify(getDB(), null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'fichas_medicas_demo.json';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
+
+        $('#btnDemo').addEventListener('click', () => {
+            const demo = {
+                '123456785': { rut: '12.345.678-5', telefono: '+56911111111', nombres: 'Ana', apellidos: 'Pérez Muñoz', email: 'ana@example.com', fechaNacimiento: '1998-06-10', direccion: 'Av. 1', ciudad: 'Santiago', estadoCivil: 'Soltero/a', comentarios: 'Asma leve.' },
+                '111111111': { rut: '11.111.111-1', telefono: '+56922222222', nombres: 'Luis', apellidos: 'González Rojas', email: 'luis@example.com', fechaNacimiento: '1987-01-22', direccion: 'Calle 2', ciudad: 'Concepción', estadoCivil: 'Casado/a', comentarios: '' }
+            };
+            const db = { ...getDB(), ...demo };
+            setDB(db);
+            showStatus('Datos de demostración cargados.');
+        });
+
+        // primer render
+        renderResultados();
+    </script>
+</body>
+
+</html>
