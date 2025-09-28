@@ -294,7 +294,7 @@
   </main>
 
   <script>
-    // -------------------- Utilidades(normalizacionRut, FormateRut, ValidadionRut) ---
+    // ---- Utilidades(normalizacionRut, FormateRut, ValidadionRut) ---
     const $ = (sel) => document.querySelector(sel);
     const LS_KEY = 'fichasMedicas';
     const todayISO = new Date().toISOString().split('T')[0];
@@ -358,20 +358,20 @@
       showStatus('Registro guardado correctamente.');
     });
 
-    // -------- Limpiar --------------------
+    // -------- Limpiar ---
     $('#btnLimpiar').addEventListener('click', () => {
       $('#formFicha').reset();
       showStatus('Formulario en blanco.');
     });
 
-    // --------------Cerrar --------------
+    // Cerrar -------
     $('#btnCerrar').addEventListener('click', () => {
       const form = $('#formFicha');
       [...form.elements].forEach(el => { el.disabled = true; });
       showStatus('Formulario cerrado (solo lectura). Vuelva a cargar la página para reactivar.');
     });
 
-    // -------------------- Buscar --------------------
+    // ----------- Buscar -----------
     $('#buscarApellido').addEventListener('input', renderResultados);
 
     function renderResultados() {
@@ -388,7 +388,7 @@
       wrap.innerHTML = html;
     }
 
-    // -------------------- el cambio de Exportar a PDF, antes a json, siquieren lo pongo de nuevo a json, ahi me avisas --------------------
+    // -------------------- el cambio de Exportar a PDF, antes a json---------
     $('#btnExport').addEventListener('click', () => {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
@@ -424,7 +424,7 @@
       doc.save("fichas_medicas_demo.pdf");
     });
 
-    // -------------------- Datos demo --------------------
+    // --------- Datos demo --------
     $('#btnDemo').addEventListener('click', () => {
       const demo = {
         '123456785': { rut: '12.345.678-5', telefono: '+56911111111', nombres: 'Ana', apellidos: 'Pérez Muñoz', email: 'ana@example.com', fechaNacimiento: '1998-06-10', direccion: 'Av. 1', ciudad: 'Santiago', estadoCivil: 'Soltero/a', comentarios: 'Asma leve.' },
